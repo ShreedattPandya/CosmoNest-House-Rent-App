@@ -1,7 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, Star } from 'lucide-react';
+import axiosInstance from '@/utils/axios';
+import { usePlaces } from '../../../hooks';
 
 const HeroSection = () => {
+    const allPlaces = usePlaces();
+    const { setPlaces, setLoading } = allPlaces;
+
+    const [searchText, setSearchText] = useState('');
+    const [searchTimeout, setSearchTimeout] = useState(null);
+
+    const handleSearch = async (e) => {
+        const value = e.target.value;
+        setSearchText(value);
+
+        clearTimeout(searchTimeout);
+
+        if (value.trim() !== '') {
+            setLoading(true);
+            const timeoutId = setTimeout(async () => {
+                try {
+                    const { data } = await axiosInstance.get(
+                        `/places/search/${value.trim()}`,
+                    );
+                    setPlaces(data);
+                } catch (error) {
+                    console.error("Search error:", error);
+                } finally {
+                    setLoading(false);
+                }
+            }, 500);
+            setSearchTimeout(timeoutId);
+        } else {
+            // If search is cleared, you might want to fetch all places or handle it accordingly
+            // For now, let's keep it simple.
+        }
+    };
+
+    const triggerScroll = () => {
+        const housesSection = document.getElementById("available-houses");
+        if (housesSection) {
+            const y = housesSection.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    };
+
     return (
         <div className="relative overflow-hidden bg-white pt-24 pb-16 lg:pt-32 lg:pb-32 w-[100vw] relative left-1/2 -translate-x-1/2 border-b border-gray-100">
             {/* Background Pattern */}
@@ -60,21 +103,17 @@ const HeroSection = () => {
                             type="text"
                             placeholder="Where do you want to live?"
                             className="w-full bg-transparent px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base font-medium text-gray-800 placeholder-gray-400 focus:outline-none"
-                            readOnly
+                            value={searchText}
+                            onChange={handleSearch}
                         />
                     </div>
                     <button
                         className="shrink-0 rounded-full bg-primary px-6 py-3 sm:px-10 sm:py-4 text-sm sm:text-base font-bold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 active:scale-95"
-                        onClick={() => {
-                            const housesSection = document.getElementById("available-houses");
-                            if (housesSection) {
-                                const y = housesSection.getBoundingClientRect().top + window.scrollY - 80;
-                                window.scrollTo({ top: y, behavior: 'smooth' });
-                            }
-                        }}
+                        onClick={triggerScroll}
                     >
                         Explore
                     </button>
+
                 </div>
 
                 {/* Trust Avatars */}

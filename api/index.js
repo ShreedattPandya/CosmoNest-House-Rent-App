@@ -39,9 +39,8 @@ app.use(express.json());
 // CORS
 app.use(
   cors({
-    // origin: process.env.CLIENT_URL,
-    origin: "https://cosmo-nest-house-rent-app.vercel.app",
-    credentials: true,
+    origin: "*",
+    // credentials: true,
   })
 );
 

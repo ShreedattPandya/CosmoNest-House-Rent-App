@@ -1,6 +1,7 @@
 import { usePlaces } from '../../hooks';
 import PlaceCard from '@/components/ui/PlaceCard';
 import HeroSection from '@/components/ui/HeroSection';
+import QuickServices from '@/components/ui/QuickServices';
 import PlaceCardSkeleton from '@/components/ui/PlaceCardSkeleton';
 
 const IndexPage = () => {
@@ -10,6 +11,7 @@ const IndexPage = () => {
   return (
     <div className="flex min-h-screen flex-col bg-transparent">
       <HeroSection />
+      <QuickServices />
 
       <div id="available-houses" className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <h2 className="mb-2 text-center text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">

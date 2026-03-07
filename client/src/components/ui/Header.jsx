@@ -25,7 +25,7 @@ export const Header = () => {
 
     // hide searchbar based on url
     if (location.pathname === '/') {
-      setShowSearchBar(true);
+      setShowSearchBar(false);
     } else {
       setShowSearchBar(false);
     }
@@ -37,19 +37,17 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 z-10 flex w-screen justify-center bg-white py-4 ${
-        hasShadow ? 'shadow-md' : ''
-      }`}
+      className={`fixed top-0 z-10 flex w-screen justify-center bg-white py-4 ${hasShadow ? 'shadow-md' : ''
+        }`}
     >
       <div
-        className={`flex ${
-          showSearchBar ? 'justify-around' : 'justify-between px-10'
-        } w-screen max-w-screen-xl`}
+        className={`flex ${showSearchBar ? 'justify-around' : 'justify-between px-10'
+          } w-screen max-w-screen-xl`}
       >
         <a href="/" className="flex items-center gap-1">
           <img
             className="h-8 w-8 md:h-10 md:w-10"
-            src= "/assets/house.png"
+            src="/assets/house.png"
             alt=""
           />
 
