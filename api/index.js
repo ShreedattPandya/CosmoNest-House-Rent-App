@@ -7,6 +7,9 @@ const cookieParser = require("cookie-parser");
 const cloudinary = require("cloudinary").v2;
 
 // connect with database
+if (!process.env.DB_URL) {
+  console.error("FATAL ERROR: DB_URL is not defined in environment variables.");
+}
 connectWithDB();
 
 // cloudinary configuration
@@ -39,7 +42,10 @@ app.use(express.json());
 // CORS
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: [
+      "https://cosmo-nest-house-rent-app.vercel.app",
+      "http://localhost:5173"
+    ],
     credentials: true,
   })
 );

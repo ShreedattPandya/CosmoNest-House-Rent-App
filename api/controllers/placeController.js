@@ -130,15 +130,18 @@ exports.searchPlaces = async (req, res) => {
   try {
     const searchword = req.params.key;
 
-    if (searchword === '') return res.status(200).json(await Place.find())
+    if (searchword === '') {
+      const allPlaces = await Place.find();
+      return res.status(200).json({ places: allPlaces });
+    }
 
-    const searchMatches = await Place.find({ address: { $regex: searchword, $options: "i" } })
+    const searchMatches = await Place.find({ address: { $regex: searchword, $options: "i" } });
 
-    res.status(200).json(searchMatches);
+    res.status(200).json({ places: searchMatches });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({
-      message: 'Internal serever error 1',
+      message: 'Internal server error during search',
     });
   }
-}
+};

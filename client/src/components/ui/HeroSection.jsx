@@ -23,7 +23,7 @@ const HeroSection = () => {
                     const { data } = await axiosInstance.get(
                         `/places/search/${value.trim()}`,
                     );
-                    setPlaces(data);
+                    setPlaces(data.places);
                 } catch (error) {
                     console.error("Search error:", error);
                 } finally {
