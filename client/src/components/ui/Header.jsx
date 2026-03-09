@@ -59,23 +59,32 @@ export const Header = () => {
         {showSearchBar ? (
           <SearchBar />
         ) : (
-          <div className="hidden items-center gap-8 md:flex">
-            <Link to="/" className="font-semibold text-gray-600 hover:text-primary transition-colors">Home</Link>
-            {user && (
-              <Link to="/account/places" className="font-semibold text-gray-600 hover:text-primary transition-colors">My Properties</Link>
-            )}
+          <div className="hidden items-center gap-10 md:flex flex-1 justify-center ml-20">
+            <Link to="/" className="text-[17px] font-semibold text-gray-700 hover:text-primary transition-colors">Home</Link>
+            <button
+              onClick={() => {
+                const housesSection = document.getElementById("available-houses");
+                if (housesSection) {
+                  const y = housesSection.getBoundingClientRect().top + window.scrollY - 100;
+                  window.scrollTo({ top: y, behavior: 'smooth' });
+                } else {
+                  window.location.href = "/#available-houses";
+                }
+              }}
+              className="text-[17px] font-semibold text-gray-700 hover:text-primary transition-colors"
+            >
+              Explore
+            </button>
           </div>
         )}
 
-        <div className="flex items-center gap-4">
-          {user && (
-            <Link
-              to="/account/places/new"
-              className="hidden lg:flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
-            >
-              List your property
-            </Link>
-          )}
+        <div className="flex items-center gap-6">
+          <Link
+            to={user ? "/account/places/new" : "/login"}
+            className="flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 text-sm font-bold text-gray-700 shadow-sm transition-all hover:border-primary/30 hover:shadow-md hover:bg-gray-50 active:scale-95"
+          >
+            List your property
+          </Link>
         </div>
 
         <Link
