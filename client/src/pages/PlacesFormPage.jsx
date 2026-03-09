@@ -154,85 +154,139 @@ const PlacesFormPage = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="min-h-screen bg-transparent pt-24 pb-20">
       <AccountNav />
-      <form onSubmit={savePlace}>
-        {preInput(
-          'Title',
-          'title for your place. Should be short and catchy as in advertisement',
-        )}
-        <input
-          type="text"
-          name="title"
-          value={title}
-          onChange={handleFormData}
-          placeholder="title, for example: My lovely apt"
-        />
-
-        {preInput('Address', 'address to this place')}
-        <input
-          type="text"
-          name="address"
-          value={address}
-          onChange={handleFormData}
-          placeholder="address"
-        />
-
-        {preInput('Photos', 'more = better')}
-
-        <PhotosUploader
-          addedPhotos={addedPhotos}
-          setAddedPhotos={setAddedPhotos}
-        />
-
-        {preInput('Description', 'discription of the place')}
-        <textarea
-          value={description}
-          name="description"
-          onChange={handleFormData}
-        />
-
-        {preInput('Perks', ' select all the perks of your place')}
-        <Perks selected={perks} handleFormData={handleFormData} />
-
-        {preInput('Extra info', 'house rules, etc ')}
-        <textarea
-          value={extraInfo}
-          name="extraInfo"
-          onChange={handleFormData}
-        />
-
-        {preInput(
-          'Number of guests & Price',
-          // 'add check in and out times, remember to have some time window forcleaning the room between guests. '
-          'Specify the maximum number of guests so that the client stays within the limit.',
-        )}
-        <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
-          <div>
-            <h3 className="mt-2 -mb-1">Max no. of guests</h3>
-            <input
-              type="text"
-              name="maxGuests"
-              value={maxGuests}
-              onChange={handleFormData}
-              placeholder="1"
-            />
-          </div>
-          <div>
-            <h3 className="mt-2 -mb-1">Price per night</h3>
-            <input
-              type="number"
-              name="price"
-              value={price}
-              onChange={handleFormData}
-              placeholder="1"
-            />
-          </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="mb-12">
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-2">
+            {id ? 'Update Property' : 'List New Property'}
+          </h1>
+          <p className="text-gray-500">Share your space with the world and start earning today.</p>
         </div>
-        <button className="mx-auto my-4 flex rounded-full bg-primary py-3 px-20 text-xl font-semibold text-white">
-          Save
-        </button>
-      </form>
+
+        <form onSubmit={savePlace} className="bg-white p-6 md:p-10 rounded-3xl border border-gray-100 shadow-[0_20px_50px_rgba(8,_112,_184,_0.05)] space-y-10">
+          <div className="space-y-6">
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Basic Information</h3>
+              <p className="text-sm text-gray-500">Provide a catchy title and clear address for your property.</p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Property Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={title}
+                  onChange={handleFormData}
+                  placeholder="e.g., Luxury Waterfront Villa with Private Pool"
+                  className="w-full px-5 py-3 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none text-gray-800"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={address}
+                  onChange={handleFormData}
+                  placeholder="Detailed address of the location"
+                  className="w-full px-5 py-3 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none text-gray-800"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Visuals & Details</h3>
+              <p className="text-sm text-gray-500">Upload high-quality photos and describe what makes your place unique.</p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-4 ml-1">Property Photos (Min. 5)</label>
+                <PhotosUploader
+                  addedPhotos={addedPhotos}
+                  setAddedPhotos={setAddedPhotos}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Property Description</label>
+                <textarea
+                  value={description}
+                  name="description"
+                  onChange={handleFormData}
+                  placeholder="Tell potential guests about the atmosphere, the neighborhood, and the amenities..."
+                  className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none h-40 text-gray-800 leading-relaxed"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Amenities & Logistics</h3>
+              <p className="text-sm text-gray-500">Let guests know what's included and any house rules.</p>
+            </div>
+
+            <div className="space-y-6">
+              <Perks selected={perks} handleFormData={handleFormData} />
+
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Extra Information / House Rules</label>
+                <textarea
+                  value={extraInfo}
+                  name="extraInfo"
+                  onChange={handleFormData}
+                  placeholder="e.g. No smoking, quiet hours, pet policies..."
+                  className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none h-32 text-gray-800 leading-relaxed"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Guests & Pricing</h3>
+              <p className="text-sm text-gray-500">Set the capacity and your nightly rate.</p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Max Guests</label>
+                <input
+                  type="number"
+                  name="maxGuests"
+                  value={maxGuests}
+                  onChange={handleFormData}
+                  placeholder="e.g. 4"
+                  className="w-full px-5 py-3 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none text-gray-800"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Price Per Night (₹)</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={price}
+                  onChange={handleFormData}
+                  placeholder="e.g. 1500"
+                  className="w-full px-5 py-3 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none text-gray-800 font-bold text-primary"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8 text-center border-t border-gray-100">
+            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-primary py-4 px-16 text-white font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:bg-primary/90 hover:-translate-y-1 transition-all active:scale-95">
+              {id ? 'Update Listing' : 'Publish Listing'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

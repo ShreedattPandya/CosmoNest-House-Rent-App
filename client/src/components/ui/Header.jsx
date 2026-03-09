@@ -56,7 +56,27 @@ export const Header = () => {
           </span>
         </a>
 
-        {showSearchBar && <SearchBar />}
+        {showSearchBar ? (
+          <SearchBar />
+        ) : (
+          <div className="hidden items-center gap-8 md:flex">
+            <Link to="/" className="font-semibold text-gray-600 hover:text-primary transition-colors">Home</Link>
+            {user && (
+              <Link to="/account/places" className="font-semibold text-gray-600 hover:text-primary transition-colors">My Properties</Link>
+            )}
+          </div>
+        )}
+
+        <div className="flex items-center gap-4">
+          {user && (
+            <Link
+              to="/account/places/new"
+              className="hidden lg:flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
+            >
+              List your property
+            </Link>
+          )}
+        </div>
 
         <Link
           to={user ? '/account' : '/login'}
