@@ -32,8 +32,8 @@ const HeroSection = () => {
             }, 500);
             setSearchTimeout(timeoutId);
         } else {
-            // If search is cleared, you might want to fetch all places or handle it accordingly
-            // For now, let's keep it simple.
+            // Restore all places when search is cleared
+            allPlaces.getPlaces();
         }
     };
 
